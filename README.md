@@ -1,51 +1,74 @@
 # JoyProxy Tester
 
-A lightweight, powerful desktop proxy testing and batch validation tool designed for HTTP/HTTPS, SOCKS5 TCP, and SOCKS5 UDP proxies.
+- **Official website:** https://www.joyproxy.com
+- **Download binaries:** https://github.com/joyproxy/joyproxy-tester/releases
 
-![JoyProxy Tester](web/style.css)
+> **JoyProxy** provides high-performance global proxy infrastructure and developer tools. Visit **https://www.joyproxy.com** for premium residential, data center, and mobile proxy services.
 
-## Features
+[English](#english) | [中文](#中文)
 
-- **Single Proxy Testing**:
-  - Test connectivity and response times for **HTTP / TCP**, **SOCKS5 / TCP**, and **SOCKS5 / UDP** protocols.
-  - Proxy authentication support (Username & Password).
-  - Quick paste parsing (`host:port`, `user:pass@host:port`, or full proxy URLs).
-  - Optional Windows system proxy synchronization.
+---
 
-- **IP & Geo Location Verification**:
-  - Built-in multi-channel IP+Geo detection (`ipinfo.io`, `ipwhois.app`, `ip-api.com`, `api.myip.com`).
-  - Custom target URL support for specialized endpoints.
-  - Detailed response viewing with JSON formatting.
+<a id="english"></a>
 
-- **Batch Testing & API Extraction**:
-  - Extract proxy endpoints dynamically via API URLs using regex patterns.
-  - Automated sequential testing with real-time success rate, average latency metrics, and live logs.
-  - Interval-based testing and manual single-switch mode.
+## English
 
-- **SOCKS5 UDP Forwarding Verification**:
-  - Built-in UDP ASSOCIATE test sending standard UDP DNS queries through the proxy.
+**JoyProxy Tester** is a lightweight, cross-platform desktop proxy connectivity testing and batch validation tool. It supports **HTTP / TCP**, **SOCKS5 / TCP**, and **SOCKS5 / UDP** protocols with multi-channel IP geolocation detection, dynamic API endpoint extraction, and Windows system proxy integration.
 
-## Tech Stack
+- **Official website:** https://www.joyproxy.com
+- **Repository:** https://github.com/joyproxy/joyproxy-tester
+- **Releases & Downloads:** https://github.com/joyproxy/joyproxy-tester/releases
 
-- **Backend**: Python 3.10+ (pywebview, requests, PySocks, Flask for headless mode)
-- **Frontend**: Modern Vanilla HTML5 / CSS3 / JavaScript
-- **Packaging**: PyInstaller for standalone portable executable
+---
 
-## Getting Started
+### Key Features
 
-### Prerequisites
+1. **Multi-Protocol Proxy Connectivity Testing**:
+   - Comprehensive support for **HTTP / HTTPS**, **SOCKS5 TCP**, and **SOCKS5 UDP** protocols.
+   - Proxy authentication support (Username & Password).
+   - Smart clipboard input parsing (supports `host:port`, `user:pass@host:port`, and standard `http://` / `socks5://` URI schemes).
+   - One-click Windows system browser proxy synchronization and restoration.
+
+2. **Multi-Channel IP & Geolocation Verification**:
+   - Built-in multi-channel IP+Geo detection (`ipinfo.io`, `ipwhois.app`, `ip-api.com`, `api.myip.com`).
+   - Automatic JSON response parsing to extract outbound public IP, country, and location details.
+   - Custom target URL support for arbitrary verification endpoints (returns raw response).
+
+3. **Batch Testing & Dynamic API Extraction**:
+   - Extract proxy endpoints on-the-fly via provider API URLs using customizable regex patterns.
+   - Strictly sequential batch testing pipeline with real-time success rate, average latency statistics, and live log table.
+   - Interval-based continuous testing with countdown timers and manual single-switch mode.
+
+4. **SOCKS5 UDP Forwarding Verification**:
+   - SOCKS5 `UDP ASSOCIATE` verification sending standard UDP DNS queries to target DNS servers (e.g. `8.8.8.8:53`) through the proxy tunnel.
+
+---
+
+### Download & Installation
+
+Prebuilt standalone Windows binaries are available on [GitHub Releases](https://github.com/joyproxy/joyproxy-tester/releases).
+
+1. Open the latest [Release v2.6.2](https://github.com/joyproxy/joyproxy-tester/releases/tag/v2.6.2).
+2. Download `JoyProxy-Tester-2.6.2.exe`.
+3. Run the executable directly without any runtime installation.
+
+---
+
+### Running from Source
+
+#### Prerequisites
 
 - Python 3.10 or higher
 
-### Installation
+#### Quick Start
 
-1. Clone this repository:
+1. Clone the repository:
    ```bash
    git clone https://github.com/joyproxy/joyproxy-tester.git
    cd joyproxy-tester
    ```
 
-2. Set up virtual environment and install dependencies:
+2. Create virtual environment and install dependencies:
    ```bash
    python -m venv .venv
    # Windows:
@@ -53,19 +76,100 @@ A lightweight, powerful desktop proxy testing and batch validation tool designed
    pip install -r requirements.txt
    ```
 
-3. Run the application:
+3. Launch the application:
    ```bash
    python app.py
    ```
 
-### Building Portable Executable (Windows)
+#### Building Standalone Windows Executable
 
-To build a standalone `.exe`:
 ```bash
 python build_pc.py
 ```
-The generated executable will be placed in `dist/`.
+The output executable will be generated at `dist/JoyProxy-Tester-2.6.2.exe`.
+
+---
+
+<a id="中文"></a>
+
+## 中文
+
+**JoyProxy Tester** 是一款轻量级、跨平台的桌面代理连通性测试与批量提取验证工具。全面支持 **HTTP / TCP**、**SOCKS5 / TCP** 与 **SOCKS5 / UDP** 协议，并内置多通道 IP 出口与地理位置解析、API 动态提取批量测试以及 Windows 系统代理一键联动。
+
+- **官方网站：** https://www.joyproxy.com
+- **开源仓库：** https://github.com/joyproxy/joyproxy-tester
+- **安装包下载：** https://github.com/joyproxy/joyproxy-tester/releases
+
+---
+
+### 核心功能
+
+1. **多协议代理连通性测试**：
+   - 完整支持 **HTTP / HTTPS**、**SOCKS5 TCP** 与 **SOCKS5 UDP** 协议。
+   - 支持代理账号密码鉴权（Username & Password）。
+   - 智能剪贴板地址解析（支持 `host:port`、`user:pass@host:port` 以及标准协议链接快速粘贴）。
+   - 可选同步设置 Windows 系统浏览器代理并支持一键恢复。
+
+2. **多通道出口 IP 与地理位置解析**：
+   - 内置主流稳定 IP+Geo 解析通道（`ipinfo.io`、`ipwhois.app`、`ip-api.com`、`api.myip.com`）。
+   - 自动解析出口 JSON 返回数据并结构化展示真实出口 IP 与国家/地区。
+   - 支持自定义测试目标 URL（原始文本返回，适用于自定义探测接口）。
+
+3. **批量提取与轮询测试**：
+   - 支持配置代理提取 API 与正则提取规则，自动提取并逐条测试代理有效性与延迟。
+   - 实时统计成功率、平均响应时间，并在 Live Log 中直观展示每个代理的出口 IP 与地区。
+   - 支持设定提取间隔（秒/分/时/天）与倒计时自动化循环测试，支持手动单次提取切换。
+
+4. **SOCKS5 UDP 转发测试**：
+   - 采用标准 SOCKS5 `UDP ASSOCIATE` 模式，通过代理向目标 DNS（如 `8.8.8.8:53`）发送 UDP DNS 请求，准确验证 UDP 转发能力。
+
+---
+
+### 预编译版本下载
+
+前往 [GitHub Releases](https://github.com/joyproxy/joyproxy-tester/releases) 下载 Windows 单文件免安装绿色版：
+
+1. 打开 [Release v2.6.2](https://github.com/joyproxy/joyproxy-tester/releases/tag/v2.6.2)。
+2. 下载 `JoyProxy-Tester-2.6.2.exe`。
+3. 双击直接运行，无需安装额外运行库。
+
+---
+
+### 源码运行
+
+#### 环境要求
+
+- Python 3.10 或更高版本
+
+#### 快速启动
+
+1. 克隆代码：
+   ```bash
+   git clone https://github.com/joyproxy/joyproxy-tester.git
+   cd joyproxy-tester
+   ```
+
+2. 创建虚拟环境并安装依赖：
+   ```bash
+   python -m venv .venv
+   .\.venv\Scripts\activate
+   pip install -r requirements.txt
+   ```
+
+3. 运行程序：
+   ```bash
+   python app.py
+   ```
+
+#### 打包 Windows 单文件 EXE
+
+```bash
+python build_pc.py
+```
+打包产物将输出在 `dist/JoyProxy-Tester-2.6.2.exe`。
+
+---
 
 ## License
 
-MIT License
+MIT License © 2026 JoyProxy
