@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JoyProxy Tester</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="shell">
+  <div class="app">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="brand" id="brand-link" title="Visit joyproxy.com">
+        <div class="brand-text">
+          <div class="brand-name">JoyProxy <span>Tester</span></div>
+          <div class="brand-sub">Proxy IP connectivity testing</div>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <button class="nav-item active" data-tab="single">
+          <span class="nav-ico">⚡</span><span>Single Test</span>
+        </button>
+        <button class="nav-item" data-tab="batch">
+          <span class="nav-ico">▦</span><span>Batch Test</span>
+        </button>
+        <button class="nav-item" data-tab="settings">
+          <span class="nav-ico">⚙</span><span>Settings</span>
+        </button>
+      </nav>
+    </aside>
+
+    <!-- Main -->
+    <main class="main">
+      <!-- ============ SINGLE ============ -->
+      <section class="tab active" id="tab-single">
+        <header class="page-head">
+          <div>
+            <h1>Single Test</h1>
+            <p class="muted">Enter the proxy address and port, choose a protocol, and test connectivity & response time immediately.</p>
+          </div>
+        </header>
+
+        <div class="ip-status" id="s-ip-status">
+          <div class="ip-status-main">
+            <span class="ip-status-label">Current Public IP</span>
+            <span class="ip-status-val" id="s-public-ip">Checking...</span>
+          </div>
+          <button class="btn restore hidden" type="button" id="s-clear-proxy">Clear Browser Proxy Settings</button>
+        </div>
+
+        <div class="card">
+          <div class="seg" id="single-proto">
+            <button class="seg-btn active" data-v="http">HTTP / TCP</button>
+            <button class="seg-btn" data-v="s5_tcp">SOCKS5 / TCP</button>
+            <button class="seg-btn proto-udp" data-v="s5_udp">SOCKS5 / UDP</button>
+          </div>
+
+          <div class="grid">
+            <div class="field span2">
+              <label>Proxy Address (IP or Domain)</label>
+              <input id="s-host" type="text" placeholder="IP/Domain, or paste socks5://user:pass@host:port" />
+            </div>
+            <div class="field">
+              <label>Port</label>
+              <input id="s-port" type="number" placeholder="8080" />
+            </div>
+          </div>
+
+          <div class="grid">
+            <div class="field">
+              <label>Username (optional)</label>
+              <input id="s-user" type="text" placeholder="Leave empty to skip credentials" autocomplete="off" />
+            </div>
+            <div class="field">
+              <label>Password (optional)</label>
+              <div class="pass-wrap">
+                <input id="s-pass" type="password" placeholder="Leave empty to skip credentials" autocomplete="off" />
+                <button type="button" class="pass-toggle" id="s-pass-toggle" title="Show password" aria-label="Show password">👁</button>
+              </div>
+            </div>
+          </div>
+
+          <label class="check-row sync-browser-row" id="s-sync-row">
+            <input id="s-sync-browser" type="checkbox" />
+            <span>Sync browser proxy during testing (writes Windows system proxy)</span>
+          </label>
+
+          <div class="actions">
+            <button class="btn primary" id="s-run">Start Testing</button>
+          </div>
+        </div>
+
+        <div class="card result-card hidden" id="s-result">
+          <div class="result-top">
+            <span class="badge" id="s-badge">—</span>
+            <div class="metric">
+              <span class="metric-label">Response Time</span>
+              <span class="metric-val" id="s-time">— ms</span>
+            </div>
+            <div class="metric">
+              <span class="metric-label">HTTP Status</span>
+              <span class="metric-val" id="s-status">—</span>
+            </div>
+          </div>
+          <div id="s-content-wrap">
+            <label class="muted small" id="s-content-label">Response Content</label>
+            <pre class="content" id="s-content"></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ BATCH ============ -->
+      <section class="tab" id="tab-batch">
+        <header class="page-head">
+          <div>
+            <h1>Batch Test</h1>
+            <p class="muted">Select an extract API, fetch proxy endpoints one by one, and test success rate & response time.</p>
+          </div>
+        </header>
+
+        <div class="ip-status" id="b-ip-status">
+          <div class="ip-status-main">
+            <span class="ip-status-label">Current Public IP</span>
+            <span class="ip-status-val" id="b-public-ip">Checking...</span>
+          </div>
+          <button class="btn restore hidden" type="button" id="b-clear-proxy">Clear Browser Proxy Settings</button>
+        </div>
+
+        <div class="card">
+          <div class="seg" id="batch-proto">
+            <button class="seg-btn active" data-v="http">HTTP / TCP</button>
+            <button class="seg-btn" data-v="s5_tcp">SOCKS5 / TCP</button>
+            <button class="seg-btn proto-udp" data-v="s5_udp">SOCKS5 / UDP</button>
+          </div>
+
+          <div class="grid batch-top-row">
+            <div class="field">
+              <label>Extract API</label>
+              <select id="b-api"></select>
+            </div>
+            <div class="field" id="b-count-wrap">
+              <label>Extract Count</label>
+              <input id="b-count" type="number" min="0" step="1" value="10" />
+            </div>
+            <div class="field" id="b-interval-wrap">
+              <label>Test Interval</label>
+              <div class="inline interval-row">
+                <input id="b-interval" type="number" min="0" step="1" value="0" placeholder="0" />
+                <select id="b-interval-unit">
+                  <option value="s">Seconds</option>
+                  <option value="m">Minutes</option>
+                  <option value="h">Hours</option>
+                  <option value="d">Days</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <label class="check-row sync-browser-row" id="b-sync-row">
+            <input id="b-sync-browser" type="checkbox" />
+            <span>Sync browser proxy during testing (writes Windows system proxy)</span>
+          </label>
+
+          <div class="actions">
+            <button class="btn primary" id="b-run">Start Batch Test</button>
+            <button class="btn ghost" id="b-stop" disabled>Stop</button>
+            <button class="btn ghost" id="b-manual">Manual Single Test</button>
+          </div>
+        </div>
+
+        <div class="stats">
+          <div class="stat">
+            <div class="stat-val" id="st-progress">0 / 0</div>
+              <div class="stat-label">Progress</div>
+          </div>
+          <div class="stat">
+            <div class="stat-val" id="st-rate">0%</div>
+              <div class="stat-label">Success Rate</div>
+          </div>
+          <div class="stat">
+            <div class="stat-val" id="st-avg">0 ms</div>
+              <div class="stat-label">Average Response</div>
+          </div>
+          <div class="stat">
+            <div class="stat-val" id="st-success">0</div>
+              <div class="stat-label">Success Count</div>
+          </div>
+        </div>
+
+        <div class="batch-countdown hidden" id="b-countdown">
+          <div class="batch-countdown-main">
+              <span class="batch-countdown-label">Next Switch Countdown</span>
+            <span class="batch-countdown-val" id="b-countdown-val">—</span>
+          </div>
+          <div class="batch-countdown-bar"><div class="batch-countdown-fill" id="b-countdown-fill"></div></div>
+        </div>
+
+        <div class="progress"><div class="progress-bar" id="b-progress"></div></div>
+
+        <div class="card table-card">
+          <div class="table-head">
+            <span>Live Log</span>
+            <button class="btn tiny ghost" id="b-clear">Clear</button>
+          </div>
+          <div class="table-wrap">
+            <table id="b-table">
+              <thead>
+                <tr><th>#</th><th>IP : Port</th><th>Status</th><th>Response</th><th>Notes</th></tr>
+              </thead>
+              <tbody id="b-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ SETTINGS ============ -->
+      <section class="tab" id="tab-settings">
+        <header class="page-head">
+          <div>
+            <h1>Settings</h1>
+            <p class="muted">Manage extract APIs and global test parameters. All settings are saved in the app directory.</p>
+          </div>
+        </header>
+
+        <div class="card">
+          <h3>Manage Extract APIs</h3>
+          <div class="api-form">
+            <div class="field">
+              <label for="a-name">Provider</label>
+              <input id="a-name" type="text" placeholder="Name, e.g. Provider A" />
+            </div>
+            <div class="field">
+              <label for="a-url">API</label>
+              <input id="a-url" type="text" placeholder="https://api.example.com/get?num=1&type=txt" />
+            </div>
+            <div class="field">
+              <label for="a-user">Username</label>
+              <input id="a-user" type="text" placeholder="Proxy username (optional)" autocomplete="off" />
+            </div>
+            <div class="field">
+              <label for="a-pass">Password</label>
+              <div class="pass-wrap">
+                <input id="a-pass" type="password" placeholder="Proxy password (optional)" autocomplete="off" />
+                <button type="button" class="pass-toggle" id="a-pass-toggle" title="Show password" aria-label="Show password">👁</button>
+              </div>
+            </div>
+            <button class="btn primary" id="a-add">Add</button>
+          </div>
+          <p class="hint muted small">Before adding an extract API, make sure it is allowlisted at your IP provider, or that you have credentials configured. If the API returns multiple lines (host:port or domain:port), only the first entry is used per run.</p>
+          <ul class="list" id="a-list"></ul>
+        </div>
+
+        <div class="card">
+          <h3>Advanced Parameters</h3>
+          <div class="grid">
+            <div class="field">
+              <label>Default timeout (sec)</label>
+              <input id="set-timeout" type="number" min="1" value="10" />
+            </div>
+            <div class="field span2">
+              <label>Target / IP+Geo Channel</label>
+              <select id="set-geo-channel">
+                <option value="ipinfo">ipinfo.io (https://ipinfo.io/json)</option>
+                <option value="ipwhois">ipwhois.app (https://ipwhois.app/json/)</option>
+                <option value="ip-api">ip-api.com (http://ip-api.com/json/)</option>
+                <option value="myip">api.myip.com (https://api.myip.com)</option>
+                <option value="custom">Custom URL (Raw content, no JSON parsing)</option>
+              </select>
+            </div>
+            <div class="field span2" id="geo-custom-row" style="display:none">
+              <label>Custom Target URL</label>
+              <input id="set-geo-custom-url" type="text" placeholder="https://api.example.com/ip" />
+            </div>
+          </div>
+          <label class="check-row">
+            <input id="set-show-content" type="checkbox" />
+            <span>Show response content</span>
+          </label>
+          <div class="grid udp-dns-wrap" id="udp-dns-wrap" style="margin-top:14px">
+            <div class="field span2">
+              <label>UDP Test DNS Server (port 53)</label>
+              <input id="set-udp-dns" type="text" placeholder="8.8.8.8" />
+            </div>
+          </div>
+          <p class="hint muted small udp-dns-hint">In SOCKS5 / UDP mode, the app sends a UDP DNS query to this DNS server via the proxy to verify UDP forwarding. The queried hostname is taken from the selected target channel.</p>
+          <div class="actions">
+            <button class="btn primary" id="set-save">Save Parameters</button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer class="notice-bar" id="notice-bar">
+    <div class="notice-status">
+      <div class="dot"></div>
+      <span id="engineStatus">Ready</span>
+    </div>
+  </footer>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <script src="http_api.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

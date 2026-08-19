@@ -1,0 +1,42 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+.installed.cfg
+*.egg
+*.spec
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# Backup and temporary files
+backup/
+*.bak
+*.tmp
+*.log
+
+# Local app data & runtime config
+joyproxy_tester.json
+config.json
+*.local.json
+
+# IDE & Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
