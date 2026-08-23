@@ -1,11 +1,15 @@
 # JoyProxy Tester
 
+> **Official JoyProxy** — cloud proxy IP at [joyproxy.com](https://www.joyproxy.com) (residential, mobile, ISP/business & datacenter).  
+> **Not affiliated** with the unrelated legacy Chrome extension [`sh0cked/joy-proxy`](https://github.com/sh0cked/joy-proxy).
+
+
 - **Official website:** https://www.joyproxy.com
 - **Download binaries:** https://github.com/joyproxy/joyproxy-tester/releases
 
 > **JoyProxy** provides high-performance global proxy infrastructure and developer tools. Visit **https://www.joyproxy.com** for premium residential, data center, and mobile proxy services.
 
-[English](#english) | [中文](#中文)
+[English](#english) | [简体中文](#简体中文) | [繁體中文](#繁體中文)
 
 ---
 
@@ -90,10 +94,9 @@ The output executable will be generated at `dist/JoyProxy-Tester-2.6.2.exe`.
 
 ---
 
-<a id="中文"></a>
+<a id="简体中文"></a>
 
-## 中文
-
+## 简体中文
 **JoyProxy Tester** 是一款轻量级、跨平台的桌面代理连通性测试与批量提取验证工具。全面支持 **HTTP / TCP**、**SOCKS5 / TCP** 与 **SOCKS5 / UDP** 协议，并内置多通道 IP 出口与地理位置解析、API 动态提取批量测试以及 Windows 系统代理一键联动。
 
 - **官方网站：** https://www.joyproxy.com
@@ -167,6 +170,88 @@ The output executable will be generated at `dist/JoyProxy-Tester-2.6.2.exe`.
 python build_pc.py
 ```
 打包产物将输出在 `dist/JoyProxy-Tester-2.6.2.exe`。
+
+---
+
+---
+
+<a id="繁體中文"></a>
+
+## 繁體中文
+
+**JoyProxy Tester** 是一款輕量級、跨平臺的桌面代理連通性測試與批量提取驗證工具。全面支持 **HTTP / TCP**、**SOCKS5 / TCP** 與 **SOCKS5 / UDP** 協議，並內置多通道 IP 出口與地理位置解析、API 動態提取批量測試以及 Windows 系統代理一鍵聯動。
+
+- **官方網站：** https://www.joyproxy.com
+- **開源倉庫：** https://github.com/joyproxy/joyproxy-tester
+- **安裝包下載：** https://github.com/joyproxy/joyproxy-tester/releases
+
+---
+
+### 核心功能
+
+1. **多協議代理連通性測試**：
+   - 完整支持 **HTTP / HTTPS**、**SOCKS5 TCP** 與 **SOCKS5 UDP** 協議。
+   - 支持代理賬號密碼鑑權（Username & Password）。
+   - 智能剪貼板地址解析（支持 `host:port`、`user:pass@host:port` 以及標準協議鏈接快速粘貼）。
+   - 可選同步設置 Windows 系統瀏覽器代理並支持一鍵恢復。
+
+2. **多通道出口 IP 與地理位置解析**：
+   - 內置主流穩定 IP+Geo 解析通道（`ipinfo.io`、`ipwhois.app`、`ip-api.com`、`api.myip.com`）。
+   - 自動解析出口 JSON 返回數據並結構化展示真實出口 IP 與國家/地區。
+   - 支持自定義測試目標 URL（原始文本返回，適用於自定義探測接口）。
+
+3. **批量提取與輪詢測試**：
+   - 支持配置代理提取 API 與正則提取規則，自動提取並逐條測試代理有效性與延遲。
+   - 實時統計成功率、平均響應時間，並在 Live Log 中直觀展示每個代理的出口 IP 與地區。
+   - 支持設定提取間隔（秒/分/時/天）與倒計時自動化循環測試，支持手動單次提取切換。
+
+4. **SOCKS5 UDP 轉發測試**：
+   - 採用標準 SOCKS5 `UDP ASSOCIATE` 模式，通過代理向目標 DNS（如 `8.8.8.8:53`）發送 UDP DNS 請求，準確驗證 UDP 轉發能力。
+
+---
+
+### 預編譯版本下載
+
+前往 [GitHub Releases](https://github.com/joyproxy/joyproxy-tester/releases) 下載 Windows 單文件免安裝綠色版：
+
+1. 打開 [Release v2.6.2](https://github.com/joyproxy/joyproxy-tester/releases/tag/v2.6.2)。
+2. 下載 `JoyProxy-Tester-2.6.2.exe`。
+3. 雙擊直接運行，無需安裝額外運行庫。
+
+---
+
+### 源碼運行
+
+#### 環境要求
+
+- Python 3.10 或更高版本
+
+#### 快速啓動
+
+1. 克隆代碼：
+   ```bash
+   git clone https://github.com/joyproxy/joyproxy-tester.git
+   cd joyproxy-tester
+   ```
+
+2. 創建虛擬環境並安裝依賴：
+   ```bash
+   python -m venv .venv
+   .\.venv\Scripts\activate
+   pip install -r requirements.txt
+   ```
+
+3. 運行程序：
+   ```bash
+   python app.py
+   ```
+
+#### 打包 Windows 單文件 EXE
+
+```bash
+python build_pc.py
+```
+打包產物將輸出在 `dist/JoyProxy-Tester-2.6.2.exe`。
 
 ---
 
