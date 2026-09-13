@@ -5,4 +5,4 @@ Update together on every release:
   - buildozer.spec (version=..., Android package version)
 """
 
-__version__ = "2.6.2"
+__version__ = "2.6.3"

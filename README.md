@@ -50,8 +50,8 @@
 
 Prebuilt standalone Windows binaries are available on [GitHub Releases](https://github.com/joyproxy/joyproxy-tester/releases).
 
-1. Open the latest [Release v2.6.2](https://github.com/joyproxy/joyproxy-tester/releases/tag/v2.6.2).
-2. Download `JoyProxy-Tester-2.6.2.exe`.
+1. Open the latest [Release v2.6.3](https://github.com/joyproxy/joyproxy-tester/releases/tag/v2.6.3).
+2. Download `JoyProxy-Tester-2.6.3.exe`.
 3. Run the executable directly without any runtime installation.
 
 ---
@@ -88,7 +88,7 @@ Prebuilt standalone Windows binaries are available on [GitHub Releases](https://
 ```bash
 python build_pc.py
 ```
-The output executable will be generated at `dist/JoyProxy-Tester-2.6.2.exe`.
+The output executable will be generated at `dist/JoyProxy-Tester-2.6.3.exe`.
 
 ---
 
@@ -130,8 +130,8 @@ The output executable will be generated at `dist/JoyProxy-Tester-2.6.2.exe`.
 
 前往 [GitHub Releases](https://github.com/joyproxy/joyproxy-tester/releases) 下载 Windows 单文件免安装绿色版：
 
-1. 打开 [Release v2.6.2](https://github.com/joyproxy/joyproxy-tester/releases/tag/v2.6.2)。
-2. 下载 `JoyProxy-Tester-2.6.2.exe`。
+1. 打开 [Release v2.6.3](https://github.com/joyproxy/joyproxy-tester/releases/tag/v2.6.3)。
+2. 下载 `JoyProxy-Tester-2.6.3.exe`。
 3. 双击直接运行，无需安装额外运行库。
 
 ---
@@ -167,7 +167,7 @@ The output executable will be generated at `dist/JoyProxy-Tester-2.6.2.exe`.
 ```bash
 python build_pc.py
 ```
-打包产物将输出在 `dist/JoyProxy-Tester-2.6.2.exe`。
+打包产物将输出在 `dist/JoyProxy-Tester-2.6.3.exe`。
 
 ---
 
@@ -212,8 +212,8 @@ python build_pc.py
 
 前往 [GitHub Releases](https://github.com/joyproxy/joyproxy-tester/releases) 下載 Windows 單文件免安裝綠色版：
 
-1. 打開 [Release v2.6.2](https://github.com/joyproxy/joyproxy-tester/releases/tag/v2.6.2)。
-2. 下載 `JoyProxy-Tester-2.6.2.exe`。
+1. 打開 [Release v2.6.3](https://github.com/joyproxy/joyproxy-tester/releases/tag/v2.6.3)。
+2. 下載 `JoyProxy-Tester-2.6.3.exe`。
 3. 雙擊直接運行，無需安裝額外運行庫。
 
 ---
@@ -249,7 +249,7 @@ python build_pc.py
 ```bash
 python build_pc.py
 ```
-打包產物將輸出在 `dist/JoyProxy-Tester-2.6.2.exe`。
+打包產物將輸出在 `dist/JoyProxy-Tester-2.6.3.exe`。
 
 ---
 
