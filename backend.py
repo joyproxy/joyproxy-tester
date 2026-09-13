@@ -19,6 +19,7 @@ from typing import Optional
 import requests
 from platform_utils import get_app_dir, is_android, legacy_data_dirs
 from proxy_test import run_test, _DEF_HEADERS, _build_proxy_url
+from proxy_parse import parse_proxy_input, resolve_proxy_fields
 from version import __version__
 
 if is_android():
@@ -153,10 +154,25 @@ def extract_all_host_ports(text: str, regex: Optional[str] = None) -> list[tuple
 
 
 def parse_api_response(text: str, regex: Optional[str] = None) -> dict:
-    """Validate API text and extract the first host:port."""
+    """Validate API text and extract the first host:port (and optional credentials)."""
     text = (text or "").strip()
     if not text:
         return {"ok": False, "error": "API response is empty", "raw": ""}
+
+    as_proxy = parse_proxy_input(text)
+    if as_proxy and as_proxy.get("host"):
+        out: dict = {
+            "ok": True,
+            "host": as_proxy["host"],
+            "port": as_proxy["port"],
+            "raw": text[:_RAW_PREVIEW],
+        }
+        if as_proxy.get("username"):
+            out["username"] = as_proxy["username"]
+        if as_proxy.get("password"):
+            out["password"] = as_proxy["password"]
+        return out
+
     matches = extract_all_host_ports(text, regex)
     if not matches:
         raw = text[:_RAW_PREVIEW]
@@ -623,11 +639,17 @@ def execute_batch_cycle(
         return fetched
 
     host, port = fetched["host"], fetched["port"]
+    user = (username or "").strip()
+    pwd = password or ""
+    if not user and fetched.get("username"):
+        user = str(fetched.get("username") or "").strip()
+    if not pwd and fetched.get("password"):
+        pwd = str(fetched.get("password") or "")
     tested = test_proxy_cycle(
         host, port, protocol, target, timeout,
         dns_server=dns_server,
-        username=username,
-        password=password,
+        username=user,
+        password=pwd,
         show_content=show_content,
         sync_browser=sync_browser,
     )
@@ -765,12 +787,26 @@ class Api:
             timeout = 10.0
         cfg = _load_config()
         dns = (dns_server or "").strip() or cfg.get("udp_dns", "8.8.8.8")
-        user = (username or "").strip()
-        pwd = password or ""
         resolved_target = _resolve_test_target(target)
+        host, port_i, user, pwd, parsed_proto, was_parsed = resolve_proxy_fields(
+            host, port, username, password, protocol,
+        )
+        if not (0 < port_i < 65536):
+            return {
+                "ok": False,
+                "elapsed_ms": 0,
+                "content": "Invalid port",
+                "note": "Invalid port",
+                "error": "Invalid port",
+            }
+        ui_proto = (protocol or "").strip()
+        if was_parsed and parsed_proto:
+            proto = parsed_proto
+        else:
+            proto = ui_proto or parsed_proto or "http"
         geo_channel = str(cfg.get("geo_channel") or DEFAULT_PRESET_KEY).strip()
 
-        result = run_test(host, port, protocol, resolved_target, timeout, dns_server=dns,
+        result = run_test(host, port_i, proto, resolved_target, timeout, dns_server=dns,
                           username=user, password=pwd, fetch_content=True)
         data = result.to_dict()
 
@@ -789,12 +825,12 @@ class Api:
 
         proxy_note = ""
         if sync_browser and result.ok:
-            proxy_r = set_system_proxy(host, port, protocol)
+            proxy_r = set_system_proxy(host, port_i, proto)
             if proxy_r.get("ok"):
                 proxy_note = "Browser proxy synced"
                 ip_r = fetch_public_ip(
                     resolved_target, timeout,
-                    proxy_host=host, proxy_port=port, proxy_protocol=protocol,
+                    proxy_host=host, proxy_port=port_i, proxy_protocol=proto,
                     proxy_username=user, proxy_password=pwd,
                 )
                 if ip_r.get("ok"):

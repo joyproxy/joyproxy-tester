@@ -57,6 +57,20 @@ def _norm_auth(username: Optional[str], password: Optional[str]) -> tuple[str, s
     return (username or "").strip(), password or ""
 
 
+def _auth_len_error(username: Optional[str], password: Optional[str]) -> Optional[str]:
+    user, pwd = _norm_auth(username, password)
+    if not user:
+        return None
+    u_len = len(user.encode("utf-8"))
+    p_len = len(pwd.encode("utf-8"))
+    if u_len > 255 or p_len > 255:
+        return (
+            f"SOCKS5 username/password must be at most 255 bytes "
+            f"(username {u_len} bytes, password {p_len} bytes)"
+        )
+    return None
+
+
 def _build_proxy_url(scheme: str, host: str, port: int,
                      username: Optional[str] = None, password: Optional[str] = None) -> str:
     user, pwd = _norm_auth(username, password)
@@ -100,6 +114,10 @@ def test_http_like(host: str, port: int, target: str, timeout: float, scheme: st
 
     scheme is one of: 'http', 'socks5h'
     """
+    if scheme == "socks5h":
+        auth_err = _auth_len_error(username, password)
+        if auth_err:
+            return TestResult(ok=False, elapsed_ms=0, error=auth_err)
     proxy_url = _build_proxy_url(scheme, host, port, username, password)
     proxies = {"http": proxy_url, "https": proxy_url}
     start = time.perf_counter()
@@ -202,6 +220,9 @@ def test_socks5_udp(host: str, port: int, target: str, timeout: float,
     Measures the full round trip time of a UDP datagram through the proxy.
     """
     hostname = urlparse(target).hostname or "ipinfo.io"
+    auth_err = _auth_len_error(username, password)
+    if auth_err:
+        return TestResult(ok=False, elapsed_ms=0, error=auth_err)
     start = time.perf_counter()
     tcp = None
     udp = None

@@ -299,8 +299,12 @@ function decodeUriPart(text) {
   }
 }
 
+function normalizeProxyText(text) {
+  return (text || "").trim().replace(/\uFF1A/g, ":");
+}
+
 function parseHostPortFromRaw(raw) {
-  const text = (raw || "").trim();
+  const text = normalizeProxyText(raw);
   if (!text) return null;
 
   const v6 = text.match(/^\[([^\]]+)\]:(\d{1,5})$/);
@@ -322,7 +326,7 @@ function parseHostPortFromRaw(raw) {
 }
 
 function parseProxyInput(text) {
-  let raw = (text || "").trim();
+  let raw = normalizeProxyText(text);
   if (!raw) return null;
 
   const out = { host: "", port: "", username: "", password: "", protocol: null };
@@ -385,7 +389,10 @@ function applyProxyInput(text) {
 }
 
 function applyHostPortSplit() {
-  const text = ($("#s-host").value || "").trim();
+  const text = normalizeProxyText($("#s-host").value);
+  if (parseProxyInput(text)) {
+    return applyProxyInput(text);
+  }
   if (/^(https?|socks5h?|socks4):\/\//i.test(text)) {
     return applyProxyInput(text);
   }
